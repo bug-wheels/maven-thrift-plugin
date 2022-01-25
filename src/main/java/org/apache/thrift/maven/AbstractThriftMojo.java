@@ -28,6 +28,7 @@ import org.apache.maven.plugin.MojoExecutionException;
 import org.apache.maven.plugin.MojoFailureException;
 import org.apache.maven.project.MavenProject;
 import org.apache.maven.project.MavenProjectHelper;
+import org.apache.thrift.maven.Platform.PlatformType;
 import org.codehaus.plexus.util.cli.CommandLineException;
 import org.codehaus.plexus.util.io.RawInputStreamFacade;
 
@@ -93,6 +94,12 @@ abstract class AbstractThriftMojo extends AbstractMojo {
      * @required
      */
     private String thriftExecutable;
+
+    private String macThriftExecutable;
+
+    private String winThriftExecutable;
+
+    private String linuxThriftExecutable;
 
     /**
      * This string is passed to the {@code --gen} option of the {@code thrift} parameter. By default
@@ -182,6 +189,25 @@ abstract class AbstractThriftMojo extends AbstractMojo {
                     // Quick fix to fix issues with two mvn installs in a row (ie no clean)
                     cleanDirectory(outputDirectory);
 
+                    String finalThriftExecutable = null;
+                    PlatformType os = Platform.os();
+                    switch (os) {
+                        case WINDOWS:
+                            finalThriftExecutable = winThriftExecutable;
+                            break;
+                        case MACOS:
+                            finalThriftExecutable = macThriftExecutable;
+                            break;
+                        case LINUX:
+                            finalThriftExecutable = linuxThriftExecutable;
+                            break;
+                        case UNKNOWN:
+                        default:
+                            // PASS
+                    }
+
+                    finalThriftExecutable = Strings.firstNonBlank(finalThriftExecutable, thriftExecutable);
+
                     Thrift thrift = new Thrift.Builder(thriftExecutable, outputDirectory)
                             .setGenerator(generator)
                             .addThriftPathElement(thriftSourceRoot)
@@ -233,7 +259,10 @@ abstract class AbstractThriftMojo extends AbstractMojo {
     private void checkParameters() {
         checkNotNull(project, "project");
         checkNotNull(projectHelper, "projectHelper");
-        checkNotNull(thriftExecutable, "thriftExecutable");
+
+
+
+        checkNotNull(Strings.firstNonBlank(winThriftExecutable, macThriftExecutable, linuxThriftExecutable, thriftExecutable), "thriftExecutable");
         checkNotNull(generator, "generator");
         final File thriftSourceRoot = getThriftSourceRoot();
         checkNotNull(thriftSourceRoot);

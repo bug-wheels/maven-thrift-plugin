@@ -19,19 +19,23 @@ package org.apache.thrift.maven;
  * under the License.
  */
 
+import static junit.framework.Assert.assertEquals;
+import static junit.framework.Assert.assertFalse;
+import static junit.framework.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.fail;
+
 import org.codehaus.plexus.util.FileUtils;
 import org.codehaus.plexus.util.cli.CommandLineException;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
+
 
 import java.io.File;
+import org.junit.jupiter.api.AfterAll;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.TestInstance;
+import org.junit.jupiter.api.TestInstance.Lifecycle;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
-
+@TestInstance(Lifecycle.PER_CLASS)
 public class TestThrift {
 
     private File testRootDir;
@@ -39,7 +43,7 @@ public class TestThrift {
     private File genJavaDir;
     private Thrift.Builder builder;
 
-    @Before
+    @BeforeAll
     public void setup() throws Exception {
         final File tmpDir = new File(System.getProperty("java.io.tmpdir"));
         testRootDir = new File(tmpDir, "thrift-test");
@@ -148,7 +152,7 @@ public class TestThrift {
         }
     }
 
-    @After
+    @AfterAll
     public void cleanup() throws Exception {
         if (testRootDir.exists()) {
             FileUtils.cleanDirectory(testRootDir);
