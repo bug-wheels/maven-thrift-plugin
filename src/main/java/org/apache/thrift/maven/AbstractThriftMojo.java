@@ -95,10 +95,28 @@ abstract class AbstractThriftMojo extends AbstractMojo {
      */
     private String thriftExecutable;
 
+    /**
+     * This is the path to the {@code thrift} executable. By default it will search the {@code $PATH}.
+     *
+     * @parameter default-value="thrift"
+     * @required
+     */
     private String macThriftExecutable;
 
+    /**
+     * This is the path to the {@code thrift} executable. By default it will search the {@code $PATH}.
+     *
+     * @parameter default-value="thrift.exe"
+     * @required
+     */
     private String winThriftExecutable;
 
+    /**
+     * This is the path to the {@code thrift} executable. By default it will search the {@code $PATH}.
+     *
+     * @parameter default-value="thrift"
+     * @required
+     */
     private String linuxThriftExecutable;
 
     /**
@@ -208,7 +226,7 @@ abstract class AbstractThriftMojo extends AbstractMojo {
 
                     finalThriftExecutable = Strings.firstNonBlank(finalThriftExecutable, thriftExecutable);
 
-                    Thrift thrift = new Thrift.Builder(thriftExecutable, outputDirectory)
+                    Thrift thrift = new Thrift.Builder(finalThriftExecutable, outputDirectory)
                             .setGenerator(generator)
                             .addThriftPathElement(thriftSourceRoot)
                             .addThriftPathElements(derivedThriftPathElements)

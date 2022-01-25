@@ -1,17 +1,23 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>com.github.bug-wheels</groupId>
+    <groupId>com.github.zyndev</groupId>
     <artifactId>thrift-maven-plugin</artifactId>
     <packaging>maven-plugin</packaging>
     <name>Maven Thrift Plugin</name>
-    <version>0.1.13-SNAPSHOT</version>
+    <version>0.1.14-SNAPSHOT</version>
     <description>Maven Thrift Plugin that executes the thrift code generator</description>
-    <url>https://github.com/dtrott/maven-thrift-plugin</url>
+    <url>https://github.com/bug-wheels/maven-thrift-plugin</url>
 
     <prerequisites>
         <maven>2.0.6</maven>
     </prerequisites>
+
+    <parent>
+        <groupId>org.sonatype.oss</groupId>
+        <artifactId>oss-parent</artifactId>
+        <version>7</version>
+    </parent>
 
     <licenses>
         <license>
@@ -22,38 +28,37 @@
     </licenses>
 
     <scm>
-        <url>https://github.com/dtrott/maven-thrift-plugin</url>
-        <connection>scm:git:git@github.com:dtrott/maven-thrift-plugin.git</connection>
-      <tag>HEAD</tag>
-  </scm>
+        <url>https://github.com/bug-wheels/maven-thrift-plugin</url>
+        <connection>scm:git@github.com:bug-wheels/maven-thrift-plugin.git</connection>
+        <developerConnection>https://github.com/bug-wheels/maven-thrift-plugin</developerConnection>
+    </scm>
 
     <developers>
         <developer>
-            <id>drott</id>
-            <name>David Trott</name>
-            <email>github@davidtrott.com</email>
+            <id>zyn</id>
+            <name>Zhang Yunan</name>
+            <email>zyndev@gmail.com</email>
         </developer>
     </developers>
-
-    <distributionManagement>
-        <downloadUrl>http://maven.davidtrott.com/repository</downloadUrl>
-        <repository>
-            <id>dtrott-public</id>
-            <name>David Trott's Public Repository</name>
-            <url>file:///repositories/maven.davidtrott.com/release</url>
-        </repository>
-        <snapshotRepository>
-            <id>dtrott-public</id>
-            <name>David Trott's Public Snapshot Repository</name>
-            <url>file:///repositories/maven.davidtrott.com/snapshot</url>
-        </snapshotRepository>
-    </distributionManagement>
 
     <properties>
         <maven.compiler.source>8</maven.compiler.source>
         <maven.compiler.target>8</maven.compiler.target>
     </properties>
 
+<!--    <distributionManagement>-->
+<!--        <downloadUrl>http://maven.davidtrott.com/repository</downloadUrl>-->
+<!--        <repository>-->
+<!--            <id>dtrott-public</id>-->
+<!--            <name>David Trott's Public Repository</name>-->
+<!--            <url>file:///repositories/maven.davidtrott.com/release</url>-->
+<!--        </repository>-->
+<!--        <snapshotRepository>-->
+<!--            <id>dtrott-public</id>-->
+<!--            <name>David Trott's Public Snapshot Repository</name>-->
+<!--            <url>file:///repositories/maven.davidtrott.com/snapshot</url>-->
+<!--        </snapshotRepository>-->
+<!--    </distributionManagement>-->
     <build>
         <plugins>
             <plugin>
@@ -69,6 +74,31 @@
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-plugin-plugin</artifactId>
                 <version>3.5</version>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-javadoc-plugin</artifactId>
+                <version>2.9</version>
+                <configuration>
+                    <show>private</show>
+                    <nohelp>true</nohelp>
+                    <aggregate>true</aggregate>
+                    <charset>UTF-8</charset>
+                    <encoding>UTF-8</encoding>
+                    <docencoding>UTF-8</docencoding>
+                    <javadocExecutable>/Library/Java/JavaVirtualMachines/jdk1.8.0_144.jdk/Contents/Home/bin/javadoc</javadocExecutable>
+                </configuration>
+                <executions>
+                    <execution>
+                        <id>attach-javadocs</id>
+                        <goals>
+                            <goal>jar</goal>
+                        </goals>
+                        <configuration>
+                            <additionalparam>-Xdoclint:none</additionalparam>
+                        </configuration>
+                    </execution>
+                </executions>
             </plugin>
         </plugins>
 
