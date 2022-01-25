@@ -46,19 +46,6 @@
         <maven.compiler.target>8</maven.compiler.target>
     </properties>
 
-<!--    <distributionManagement>-->
-<!--        <downloadUrl>http://maven.davidtrott.com/repository</downloadUrl>-->
-<!--        <repository>-->
-<!--            <id>dtrott-public</id>-->
-<!--            <name>David Trott's Public Repository</name>-->
-<!--            <url>file:///repositories/maven.davidtrott.com/release</url>-->
-<!--        </repository>-->
-<!--        <snapshotRepository>-->
-<!--            <id>dtrott-public</id>-->
-<!--            <name>David Trott's Public Snapshot Repository</name>-->
-<!--            <url>file:///repositories/maven.davidtrott.com/snapshot</url>-->
-<!--        </snapshotRepository>-->
-<!--    </distributionManagement>-->
     <build>
         <plugins>
             <plugin>
@@ -74,31 +61,6 @@
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-plugin-plugin</artifactId>
                 <version>3.5</version>
-            </plugin>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-javadoc-plugin</artifactId>
-                <version>2.9</version>
-                <configuration>
-                    <show>private</show>
-                    <nohelp>true</nohelp>
-                    <aggregate>true</aggregate>
-                    <charset>UTF-8</charset>
-                    <encoding>UTF-8</encoding>
-                    <docencoding>UTF-8</docencoding>
-                    <javadocExecutable>/Library/Java/JavaVirtualMachines/jdk1.8.0_144.jdk/Contents/Home/bin/javadoc</javadocExecutable>
-                </configuration>
-                <executions>
-                    <execution>
-                        <id>attach-javadocs</id>
-                        <goals>
-                            <goal>jar</goal>
-                        </goals>
-                        <configuration>
-                            <additionalparam>-Xdoclint:none</additionalparam>
-                        </configuration>
-                    </execution>
-                </executions>
             </plugin>
         </plugins>
 
